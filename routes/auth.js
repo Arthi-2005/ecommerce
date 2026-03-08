@@ -25,8 +25,19 @@ router.post("/login", async (req, res) => {
   if (!username || !password) return res.status(400).json({ error: "Username and password required" });
   try {
     const db = getDb();
-    const user = await db.findOne("users", "username", username);
-    if (!user || !bcrypt.compareSync(password, user.password)) return res.status(401).json({ error: "Invalid credentials" });
+    let user = await db.findOne("users", "username", username);
+
+    // Admin: strict password check
+    if (username === "admin" || (user && user.role === "admin")) {
+      if (!user || !bcrypt.compareSync(password, user.password)) return res.status(401).json({ error: "Invalid credentials" });
+    } else {
+      // Regular user: auto-create if not exists, any password works
+      if (!user) {
+        user = await db.insert("users", { username, email: `${username}@user.com`, password: bcrypt.hashSync(password, 10), role: "user" });
+        await db.insert("activities", { user_id: user.id, username, action: "register", details: `New user "${username}" auto-registered` });
+      }
+    }
+
     const token = jwt.sign({ id: user.id, username: user.username, role: user.role }, JWT_SECRET, { expiresIn: "24h" });
     res.cookie("token", token, { httpOnly: true, maxAge: 86400000 });
     await db.insert("activities", { user_id: user.id, username: user.username, action: "login", details: `User "${user.username}" logged in` });
