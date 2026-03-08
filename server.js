@@ -42,10 +42,23 @@ app.get('/', (req, res) => {
 
 // Connect to MongoDB then start server
 const { connect } = require('./db');
-connect().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running at http://localhost:${PORT}`);
-    console.log(`📊 Stock Analysis Dashboard ready!`);
-    console.log(`🛒 E-Commerce Platform loaded with 800 products!`);
-  });
-}).catch(err => { console.error('Failed to connect to MongoDB:', err.message); process.exit(1); });
+connect().catch(err => { console.warn('MongoDB not connected, using JSON DB:', err.message); });
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`📊 Stock Analysis Dashboard ready!`);
+  console.log(`🛒 E-Commerce Platform loaded with 800 products!`);
+});
+
+// Keep-alive: ping self every 14 minutes to prevent Railway sleep
+const SITE_URL = process.env.RAILWAY_PUBLIC_DOMAIN
+  ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+  : null;
+if (SITE_URL) {
+  setInterval(() => {
+    const https = require('https');
+    https.get(`${SITE_URL}/api/health`, () => {}).on('error', () => {});
+  }, 14 * 60 * 1000);
+}
+
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
