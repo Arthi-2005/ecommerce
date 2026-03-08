@@ -306,6 +306,15 @@ async function placeOrder(e) {
     launchFireworks();
     // Store order id for receipt download
     window._lastOrderId = data.order.id;
+    // Auto-redirect to orders page countdown
+    let count = 5;
+    const countEl = document.getElementById('redirectCount');
+    const timer = setInterval(() => {
+      count--;
+      if (countEl) countEl.textContent = count;
+      if (count <= 0) { clearInterval(timer); window.location.href = 'orders.html'; }
+    }, 1000);
+    window._redirectTimer = timer;
     localStorage.setItem('lastOrder', JSON.stringify({
       id: data.order.id,
       grandTotal: data.order.grandTotal,
