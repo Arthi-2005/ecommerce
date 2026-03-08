@@ -4057,6 +4057,22 @@ input, select, textarea { font-family: inherit; }
   font-weight: 700;
 }
 
+.tracking-date {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.tracking-step.completed .tracking-date {
+  color: #00b894;
+}
+
+.tracking-step.active .tracking-date {
+  color: var(--primary-light);
+  font-weight: 600;
+}
+
 .tracking-step.cancelled .tracking-label {
   color: #d63031;
   font-weight: 700;

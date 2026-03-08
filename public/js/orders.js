@@ -457,15 +457,35 @@ function escapeHtml(text) {
   return d.innerHTML;
 }
 
+function getAutoStatus(order) {
+  if (order.status === 'cancelled' || order.status === 'delivered') return order.status;
+  const hoursSince = (Date.now() - new Date(order.created_at)) / 3600000;
+  if (hoursSince >= 96) return 'delivered';
+  if (hoursSince >= 24) return 'shipped';
+  if (hoursSince >= 6) return 'processing';
+  return 'confirmed';
+}
+
+function addBusinessDays(date, days) {
+  const d = new Date(date);
+  let added = 0;
+  while (added < days) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0 && d.getDay() !== 6) added++; }
+  return d;
+}
+
 function getOrderTrackingTimeline(order, detailed = false) {
+  const autoStatus = getAutoStatus(order);
+  const orderDate = new Date(order.created_at);
+  const fmt = d => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
   const steps = [
-    { key: 'confirmed', icon: 'fa-check-circle', label: 'Confirmed' },
-    { key: 'processing', icon: 'fa-cog', label: 'Processing' },
-    { key: 'shipped', icon: 'fa-truck', label: 'Shipped' },
-    { key: 'delivered', icon: 'fa-box-open', label: 'Delivered' }
+    { key: 'confirmed', icon: 'fa-check-circle', label: 'Order Confirmed', date: fmt(orderDate) },
+    { key: 'processing', icon: 'fa-cog', label: 'Processing', date: fmt(new Date(orderDate.getTime() + 6*3600000)) },
+    { key: 'shipped', icon: 'fa-truck', label: 'Shipped', date: fmt(new Date(orderDate.getTime() + 24*3600000)) },
+    { key: 'delivered', icon: 'fa-box-open', label: 'Delivered', date: fmt(addBusinessDays(orderDate, 5)) }
   ];
 
-  if (order.status === 'cancelled') {
+  if (autoStatus === 'cancelled') {
     return `<div class="order-tracking-timeline">
       <div class="tracking-step cancelled active">
         <div class="tracking-dot"><i class="fas fa-times"></i></div>
@@ -475,17 +495,16 @@ function getOrderTrackingTimeline(order, detailed = false) {
   }
 
   const statusOrder = ['confirmed', 'processing', 'shipped', 'delivered'];
-  const currentIdx = statusOrder.indexOf(order.status);
+  const currentIdx = statusOrder.indexOf(autoStatus);
 
-  // Calculate ETA
+  // ETA
   let etaHtml = '';
-  if (order.status !== 'delivered' && order.status !== 'cancelled') {
-    const orderDate = new Date(order.created_at);
-    const eta = new Date(orderDate);
-    let bDays = 0;
-    while (bDays < 7) { eta.setDate(eta.getDate() + 1); if (eta.getDay() !== 0 && eta.getDay() !== 6) bDays++; }
-    const fmtOpts = { month: 'short', day: 'numeric' };
-    etaHtml = `<div class="tracking-eta"><i class="fas fa-calendar-alt"></i> Est. delivery: ${eta.toLocaleDateString('en-US', fmtOpts)}</div>`;
+  if (autoStatus !== 'delivered' && autoStatus !== 'cancelled') {
+    const eta = addBusinessDays(orderDate, 5);
+    const today = new Date();
+    const daysLeft = Math.ceil((eta - today) / 86400000);
+    const etaLabel = daysLeft <= 0 ? 'Arriving today!' : daysLeft === 1 ? 'Arriving tomorrow!' : `Expected by ${fmt(eta)}`;
+    etaHtml = `<div class="tracking-eta"><i class="fas fa-calendar-alt"></i> ${etaLabel}</div>`;
   }
 
   const stepsHtml = steps.map((step, i) => {
@@ -494,7 +513,7 @@ function getOrderTrackingTimeline(order, detailed = false) {
     else if (i === currentIdx) cls += ' active';
     return `<div class="${cls}">
       <div class="tracking-dot"><i class="fas ${step.icon}"></i></div>
-      ${detailed ? `<span class="tracking-label">${step.label}</span>` : ''}
+      ${detailed ? `<span class="tracking-label">${step.label}</span><span class="tracking-date">${i <= currentIdx ? step.date : ''}</span>` : ''}
     </div>
     ${i < steps.length - 1 ? `<div class="tracking-line ${i < currentIdx ? 'completed' : ''}"></div>` : ''}`;
   }).join('');
