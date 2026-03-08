@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
+  if (user.role !== 'admin') {
+    window.location.href = 'products.html';
+    return;
+  }
+
   setEl('adminName', user.username);
 
   const hamburger = document.getElementById('hamburger');
