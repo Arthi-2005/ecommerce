@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Market Analysis - StockMart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar glass-nav">
+    <div class="nav-brand">
+      <i class="fas fa-chart-line pulse-icon"></i>
+      <span class="gradient-text brand-name">StockMart</span>
+    </div>
+    <div class="nav-search">
+      <form onsubmit="event.preventDefault();window.location.href='products.html?search='+encodeURIComponent(this.querySelector('input').value)">
+        <i class="fas fa-search nav-search-icon"></i>
+        <input type="text" placeholder="Search products..." class="nav-search-input">
+      </form>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-shopping-bag"></i> Products</a>
+      <a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a>
+      <a href="orders.html" class="nav-link"><i class="fas fa-receipt"></i> Orders</a>
+      <a href="analytics.html" class="nav-link active"><i class="fas fa-chart-bar"></i> Analytics</a>
+      <a href="invest.html" class="nav-link"><i class="fas fa-coins"></i> Invest</a>
+      <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="login.html" class="nav-link btn-glow" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-link"><i class="fas fa-home"></i> Home</a>
+    <a href="products.html" class="mobile-link"><i class="fas fa-shopping-bag"></i> Products</a>
+    <a href="cart.html" class="mobile-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="orders.html" class="mobile-link"><i class="fas fa-receipt"></i> Orders</a>
+    <a href="analytics.html" class="mobile-link active"><i class="fas fa-chart-bar"></i> Analytics</a>
+    <a href="invest.html" class="mobile-link"><i class="fas fa-coins"></i> Invest</a>
+    <a href="dashboard.html" class="mobile-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="login.html" class="mobile-link"><i class="fas fa-user"></i> Login</a>
+  </div>
+
+  <!-- Page Header -->
+  <section class="page-header analytics-header">
+    <h1 class="gradient-text fade-in"><i class="fas fa-chart-bar"></i> Stock Market Analysis</h1>
+    <p class="fade-in">Real-time market insights across 800+ products</p>
+  </section>
+
+  <!-- Market Overview Cards -->
+  <section class="analytics-overview">
+    <div class="container">
+      <div class="overview-grid">
+        <div class="overview-card glass-card slide-up" style="--delay: 0.1s">
+          <div class="ov-icon bg-gradient-1"><i class="fas fa-globe"></i></div>
+          <div class="ov-info">
+            <span class="ov-label">Market Cap</span>
+            <span class="ov-value" id="ovMarketCap">Loading...</span>
+          </div>
+        </div>
+        <div class="overview-card glass-card slide-up" style="--delay: 0.15s">
+          <div class="ov-icon bg-gradient-2"><i class="fas fa-exchange-alt"></i></div>
+          <div class="ov-info">
+            <span class="ov-label">Total Volume</span>
+            <span class="ov-value" id="ovVolume">Loading...</span>
+          </div>
+        </div>
+        <div class="overview-card glass-card slide-up" style="--delay: 0.2s">
+          <div class="ov-icon bg-gradient-3"><i class="fas fa-arrow-up"></i></div>
+          <div class="ov-info">
+            <span class="ov-label">Gainers</span>
+            <span class="ov-value text-success" id="ovGainers">Loading...</span>
+          </div>
+        </div>
+        <div class="overview-card glass-card slide-up" style="--delay: 0.25s">
+          <div class="ov-icon bg-gradient-4"><i class="fas fa-arrow-down"></i></div>
+          <div class="ov-info">
+            <span class="ov-label">Losers</span>
+            <span class="ov-value text-danger" id="ovLosers">Loading...</span>
+          </div>
+        </div>
+        <div class="overview-card glass-card slide-up" style="--delay: 0.3s">
+          <div class="ov-icon bg-gradient-5"><i class="fas fa-dollar-sign"></i></div>
+          <div class="ov-info">
+            <span class="ov-label">Avg Price</span>
+            <span class="ov-value" id="ovAvgPrice">Loading...</span>
+          </div>
+        </div>
+        <div class="overview-card glass-card slide-up" style="--delay: 0.35s">
+          <div class="ov-icon bg-gradient-6"><i class="fas fa-percentage"></i></div>
+          <div class="ov-info">
+            <span class="ov-label">Avg Change</span>
+            <span class="ov-value" id="ovAvgChange">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Charts Section -->
+  <section class="charts-section">
+    <div class="container">
+      <div class="charts-grid">
+        <!-- Sector Performance -->
+        <div class="chart-card glass-card slide-up">
+          <h3 class="chart-title"><i class="fas fa-industry"></i> Sector Performance</h3>
+          <div class="chart-container">
+            <canvas id="sectorChart"></canvas>
+          </div>
+        </div>
+        <!-- Market Distribution -->
+        <div class="chart-card glass-card slide-up">
+          <h3 class="chart-title"><i class="fas fa-pie-chart"></i> Price Distribution</h3>
+          <div class="chart-container">
+            <canvas id="distributionChart"></canvas>
+          </div>
+        </div>
+        <!-- Volume by Sector -->
+        <div class="chart-card glass-card slide-up">
+          <h3 class="chart-title"><i class="fas fa-chart-area"></i> Volume by Sector</h3>
+          <div class="chart-container">
+            <canvas id="volumeChart"></canvas>
+          </div>
+        </div>
+        <!-- Market Cap by Sector -->
+        <div class="chart-card glass-card slide-up">
+          <h3 class="chart-title"><i class="fas fa-coins"></i> Market Cap Distribution</h3>
+          <div class="chart-container">
+            <canvas id="marketCapChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sector Heatmap -->
+  <section class="heatmap-section">
+    <div class="container">
+      <h2 class="section-title gradient-text fade-in"><i class="fas fa-th"></i> Sector Heatmap</h2>
+      <div class="heatmap-grid" id="heatmapGrid"></div>
+    </div>
+  </section>
+
+  <!-- Stock Screener -->
+  <section class="screener-section">
+    <div class="container">
+      <h2 class="section-title gradient-text fade-in"><i class="fas fa-filter"></i> Stock Screener</h2>
+      <div class="screener-filters glass-card">
+        <div class="screener-grid">
+          <div class="screener-group">
+            <label>Category</label>
+            <select id="screenerCategory" class="filter-select">
+              <option value="">All Sectors</option>
+            </select>
+          </div>
+          <div class="screener-group">
+            <label>Min Change %</label>
+            <input type="number" id="screenerMinChange" class="filter-input" placeholder="-15" value="">
+          </div>
+          <div class="screener-group">
+            <label>Max Change %</label>
+            <input type="number" id="screenerMaxChange" class="filter-input" placeholder="15" value="">
+          </div>
+          <div class="screener-group">
+            <label>Min P/E Ratio</label>
+            <input type="number" id="screenerMinPE" class="filter-input" placeholder="0" value="">
+          </div>
+          <div class="screener-group">
+            <label>Max P/E Ratio</label>
+            <input type="number" id="screenerMaxPE" class="filter-input" placeholder="100" value="">
+          </div>
+          <div class="screener-group">
+            <label>Min Volume</label>
+            <input type="number" id="screenerMinVol" class="filter-input" placeholder="0" value="">
+          </div>
+        </div>
+        <button class="btn btn-primary btn-glow" onclick="runScreener()">
+          <i class="fas fa-search"></i> Run Screener
+        </button>
+      </div>
+      <div class="screener-results" id="screenerResults">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Name</th><th>Category</th><th>Price</th><th>Stock Price</th>
+              <th>Change %</th><th>Volume</th><th>P/E</th><th>Market Cap</th>
+            </tr>
+          </thead>
+          <tbody id="screenerBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Movers Tables -->
+  <section class="movers-tables">
+    <div class="container">
+      <div class="movers-grid">
+        <div class="glass-card slide-left">
+          <h3 class="movers-title text-success"><i class="fas fa-rocket"></i> Top 10 Gainers</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>Name</th><th>Price</th><th>Change</th><th>Volume</th></tr>
+            </thead>
+            <tbody id="gainersTable"></tbody>
+          </table>
+        </div>
+        <div class="glass-card slide-right">
+          <h3 class="movers-title text-danger"><i class="fas fa-arrow-trend-down"></i> Top 10 Losers</h3>
+          <table class="data-table">
+            <thead>
+              <tr><th>Name</th><th>Price</th><th>Change</th><th>Volume</th></tr>
+            </thead>
+            <tbody id="losersTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer glass-card">
+    <div class="footer-bottom">
+      <p>&copy; 2026 StockMart. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/analytics.js"></script>
+</body>
+</html>

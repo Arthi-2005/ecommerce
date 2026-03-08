@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - StockMart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="auth-body">
+  <!-- Animated Background -->
+  <div class="auth-bg">
+    <div class="floating-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+      <div class="shape shape-6"></div>
+    </div>
+  </div>
+
+  <div class="auth-container">
+    <!-- ===== LOGIN CARD ===== -->
+    <div class="auth-card glass-card fade-in" id="loginCard">
+      <div class="auth-header">
+        <div class="auth-logo pulse-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h1 class="gradient-text">StockMart</h1>
+        <p>Welcome back! Choose your login</p>
+      </div>
+
+      <!-- Role Tabs -->
+      <div class="auth-role-tabs">
+        <button class="auth-role-tab active" id="userTab" onclick="switchLoginRole('user')">
+          <i class="fas fa-user"></i> User Login
+        </button>
+        <button class="auth-role-tab" id="adminTab" onclick="switchLoginRole('admin')">
+          <i class="fas fa-user-shield"></i> Admin Login
+        </button>
+      </div>
+
+      <!-- Role Info Banner -->
+      <div class="auth-role-info" id="roleInfo">
+        <div class="auth-role-info-icon" id="roleInfoIcon"><i class="fas fa-shopping-bag"></i></div>
+        <div>
+          <strong id="roleInfoTitle">User Account</strong>
+          <p id="roleInfoDesc">Shop products, invest in stocks & track orders</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-group slide-up" style="--delay: 0.1s">
+          <label class="auth-input-label"><i class="fas fa-user"></i> Username</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="loginUsername" placeholder="Enter your username" required autocomplete="username">
+            <span class="input-highlight"></span>
+          </div>
+        </div>
+
+        <div class="form-group slide-up" style="--delay: 0.2s">
+          <label class="auth-input-label"><i class="fas fa-lock"></i> Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+            <span class="input-highlight"></span>
+            <button type="button" class="toggle-password" onclick="togglePassword('loginPassword', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options slide-up" style="--delay: 0.3s">
+          <label class="checkbox-wrapper">
+            <input type="checkbox" id="rememberMe">
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+        </div>
+
+        <!-- User Login Button -->
+        <button type="submit" class="btn btn-login btn-user-login btn-full btn-glow slide-up" id="loginBtn" style="--delay: 0.4s">
+          <i class="fas fa-sign-in-alt"></i> <span id="loginBtnText">Login as User</span>
+          <div class="btn-ripple"></div>
+        </button>
+
+        <div class="auth-error" id="loginError"></div>
+
+        <!-- Quick Login Buttons -->
+        <div class="quick-login-section slide-up" style="--delay: 0.45s">
+          <p class="quick-login-label">Quick Demo Login</p>
+          <div class="quick-login-buttons">
+            <button type="button" class="btn-quick-login btn-quick-user" onclick="quickLogin('user1', 'user123')">
+              <i class="fas fa-user"></i> Demo User
+            </button>
+            <button type="button" class="btn-quick-login btn-quick-admin" onclick="quickLogin('admin', 'admin123')">
+              <i class="fas fa-user-shield"></i> Demo Admin
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div class="auth-footer slide-up" style="--delay: 0.5s">
+        <p>Don't have an account? <a href="#" onclick="showRegister()" class="gradient-text">Create Account</a></p>
+      </div>
+    </div>
+
+    <!-- ===== REGISTER CARD ===== -->
+    <div class="auth-card glass-card fade-in hidden" id="registerCard">
+      <div class="auth-header">
+        <div class="auth-logo pulse-icon" style="background: var(--gradient-2);">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h1 class="gradient-text">Join StockMart</h1>
+        <p>Create your account to get started</p>
+      </div>
+
+      <form id="registerForm" class="auth-form">
+        <div class="form-group slide-up" style="--delay: 0.1s">
+          <label class="auth-input-label"><i class="fas fa-user"></i> Username</label>
+          <div class="input-wrapper">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="regUsername" placeholder="Choose a username" required autocomplete="username">
+            <span class="input-highlight"></span>
+          </div>
+        </div>
+
+        <div class="form-group slide-up" style="--delay: 0.2s">
+          <label class="auth-input-label"><i class="fas fa-envelope"></i> Email</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="regEmail" placeholder="your@email.com" required autocomplete="email">
+            <span class="input-highlight"></span>
+          </div>
+        </div>
+
+        <div class="form-group slide-up" style="--delay: 0.3s">
+          <label class="auth-input-label"><i class="fas fa-lock"></i> Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" id="regPassword" placeholder="Minimum 4 characters" required autocomplete="new-password">
+            <span class="input-highlight"></span>
+            <button type="button" class="toggle-password" onclick="togglePassword('regPassword', this)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-login btn-register-btn btn-full btn-glow slide-up" style="--delay: 0.4s">
+          <i class="fas fa-user-plus"></i> Create Account
+          <div class="btn-ripple"></div>
+        </button>
+
+        <div class="auth-error" id="registerError"></div>
+      </form>
+
+      <div class="auth-footer slide-up" style="--delay: 0.5s">
+        <p>Already have an account? <a href="#" onclick="showLogin()" class="gradient-text">Login Here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

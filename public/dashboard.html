@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - StockMart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <nav class="navbar glass-nav">
+    <div class="nav-brand">
+      <i class="fas fa-chart-line pulse-icon"></i>
+      <span class="gradient-text brand-name">StockMart</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-shopping-bag"></i> Products</a>
+      <a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a>
+      <a href="orders.html" class="nav-link"><i class="fas fa-receipt"></i> Orders</a>
+      <a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a>
+      <a href="invest.html" class="nav-link"><i class="fas fa-coins"></i> Invest</a>
+      <a href="dashboard.html" class="nav-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="#" class="nav-link btn-glow" id="logoutBtn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-link"><i class="fas fa-home"></i> Home</a>
+    <a href="products.html" class="mobile-link"><i class="fas fa-shopping-bag"></i> Products</a>
+    <a href="cart.html" class="mobile-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="orders.html" class="mobile-link"><i class="fas fa-receipt"></i> Orders</a>
+    <a href="analytics.html" class="mobile-link"><i class="fas fa-chart-bar"></i> Analytics</a>
+    <a href="invest.html" class="mobile-link"><i class="fas fa-coins"></i> Invest</a>
+    <a href="dashboard.html" class="mobile-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="#" class="mobile-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+
+  <section class="page-header dashboard-header">
+    <h1 class="gradient-text fade-in"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
+    <p class="fade-in">Welcome back, <span id="adminName">Admin</span>!</p>
+  </section>
+
+  <!-- Enhanced Stats -->
+  <section class="dashboard-stats">
+    <div class="container">
+      <div class="dash-stats-grid">
+        <div class="dash-stat glass-card slide-up neon-border-1" style="--delay:0.1s">
+          <i class="fas fa-box-open dash-stat-icon"></i>
+          <div class="dash-stat-value" id="dashTotalProducts">0</div>
+          <div class="dash-stat-label">Total Products</div>
+        </div>
+        <div class="dash-stat glass-card slide-up neon-border-2" style="--delay:0.15s">
+          <i class="fas fa-users dash-stat-icon"></i>
+          <div class="dash-stat-value" id="dashTotalUsers">0</div>
+          <div class="dash-stat-label">Total Users</div>
+        </div>
+        <div class="dash-stat glass-card slide-up neon-border-3" style="--delay:0.2s">
+          <i class="fas fa-shopping-cart dash-stat-icon"></i>
+          <div class="dash-stat-value" id="dashTotalOrders">0</div>
+          <div class="dash-stat-label">Total Orders</div>
+        </div>
+        <div class="dash-stat glass-card slide-up neon-border-4" style="--delay:0.25s">
+          <i class="fas fa-dollar-sign dash-stat-icon"></i>
+          <div class="dash-stat-value" id="dashRevenue">$0</div>
+          <div class="dash-stat-label">Total Revenue</div>
+        </div>
+        <div class="dash-stat glass-card slide-up neon-border-1" style="--delay:0.3s">
+          <i class="fas fa-clock dash-stat-icon"></i>
+          <div class="dash-stat-value" id="dashPending">0</div>
+          <div class="dash-stat-label">Pending Orders</div>
+        </div>
+        <div class="dash-stat glass-card slide-up neon-border-2" style="--delay:0.35s">
+          <i class="fas fa-chart-line dash-stat-icon"></i>
+          <div class="dash-stat-value" id="dashAvgChange">0%</div>
+          <div class="dash-stat-label">Avg Market Change</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Tabs -->
+  <section class="dashboard-tabs">
+    <div class="container">
+      <div class="tabs-nav glass-card">
+        <button class="tab-btn active" onclick="switchTab('overview')"><i class="fas fa-chart-pie"></i> Overview</button>
+        <button class="tab-btn" onclick="switchTab('orders')"><i class="fas fa-receipt"></i> Orders</button>
+        <button class="tab-btn" onclick="switchTab('activities')"><i class="fas fa-history"></i> User Activities</button>
+        <button class="tab-btn" onclick="switchTab('products')"><i class="fas fa-cog"></i> Products</button>
+        <button class="tab-btn" onclick="switchTab('ipos')"><i class="fas fa-rocket"></i> IPO Applications</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: Overview -->
+  <section class="tab-content active" id="tab-overview">
+    <div class="container">
+      <div class="dash-charts-grid">
+        <div class="chart-card glass-card">
+          <h3 class="chart-title"><i class="fas fa-chart-pie"></i> Products by Category</h3>
+          <div class="chart-container"><canvas id="dashCategoryChart"></canvas></div>
+        </div>
+        <div class="chart-card glass-card">
+          <h3 class="chart-title"><i class="fas fa-chart-bar"></i> Revenue (Last 7 Days)</h3>
+          <div class="chart-container"><canvas id="dashRevenueChart"></canvas></div>
+        </div>
+        <div class="chart-card glass-card">
+          <h3 class="chart-title"><i class="fas fa-chart-line"></i> Orders (Last 7 Days)</h3>
+          <div class="chart-container"><canvas id="dashOrdersChart"></canvas></div>
+        </div>
+        <div class="chart-card glass-card">
+          <h3 class="chart-title"><i class="fas fa-trophy"></i> Top Ordered Products</h3>
+          <div class="chart-container"><canvas id="dashTopProducts"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: Orders Management -->
+  <section class="tab-content" id="tab-orders" style="display:none">
+    <div class="container">
+      <h2 class="section-title gradient-text"><i class="fas fa-receipt"></i> All Orders</h2>
+      <div class="orders-admin-list glass-card" id="adminOrdersList">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: IPO Applications -->
+  <section class="tab-content" id="tab-ipos" style="display:none">
+    <div class="container">
+      <h2 class="section-title gradient-text"><i class="fas fa-rocket"></i> IPO Applications</h2>
+      <div class="orders-admin-list glass-card" id="ipoApplicationsList">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: User Activities -->
+  <section class="tab-content" id="tab-activities" style="display:none">
+    <div class="container">
+      <h2 class="section-title gradient-text"><i class="fas fa-history"></i> User Activities</h2>
+      <div class="activities-list glass-card" id="activitiesList">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Tab: Products Management -->
+  <section class="tab-content" id="tab-products" style="display:none">
+    <div class="container">
+      <div class="management-header">
+        <h2 class="gradient-text"><i class="fas fa-cog"></i> Product Management</h2>
+        <button class="btn btn-primary btn-glow" onclick="showAddProduct()">
+          <i class="fas fa-plus"></i> Add Product
+        </button>
+      </div>
+
+      <div class="product-form glass-card hidden" id="productForm">
+        <h3 id="formTitle">Add New Product</h3>
+        <form id="addProductForm" class="form-grid">
+          <input type="hidden" id="editProductId">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="prodName" class="filter-input" required placeholder="Enter product name">
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="prodCategory" class="filter-select" required>
+              <option value="">Select Category</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Fashion">Fashion</option>
+              <option value="Home & Kitchen">Home & Kitchen</option>
+              <option value="Books">Books</option>
+              <option value="Sports & Fitness">Sports & Fitness</option>
+              <option value="Beauty & Health">Beauty & Health</option>
+              <option value="Grocery">Grocery</option>
+              <option value="Automotive">Automotive</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price ($)</label>
+            <input type="number" id="prodPrice" class="filter-input" required min="0" step="0.01">
+          </div>
+          <div class="form-group">
+            <label>Stock Price ($)</label>
+            <input type="number" id="prodStockPrice" class="filter-input" min="0" step="0.01">
+          </div>
+          <div class="form-group full-width">
+            <label>Description</label>
+            <textarea id="prodDescription" class="filter-input" rows="3"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-glow"><i class="fas fa-save"></i> Save</button>
+            <button type="button" class="btn btn-secondary" onclick="hideAddProduct()"><i class="fas fa-times"></i> Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="products-table-wrapper glass-card">
+        <div class="table-controls">
+          <input type="text" id="dashSearch" class="filter-input" placeholder="Search products..." oninput="searchDashProducts()">
+          <select id="dashCategory" class="filter-select" onchange="filterDashProducts()">
+            <option value="">All Categories</option>
+          </select>
+        </div>
+        <div class="table-container">
+          <table class="data-table" id="productsTable">
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Category</th><th>Price</th>
+                <th>Stock</th><th>Change%</th><th>Rating</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="dashProductsBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="dashPagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order Detail Modal -->
+  <div class="modal-overlay" id="dashOrderModal">
+    <div class="modal glass-card" style="max-width:650px">
+      <button class="modal-close" onclick="closeDashOrderModal()"><i class="fas fa-times"></i></button>
+      <div id="dashOrderDetail"></div>
+    </div>
+  </div>
+
+  <footer class="footer glass-card">
+    <div class="footer-bottom">
+      <p>&copy; 2026 StockMart - Admin Dashboard</p>
+    </div>
+  </footer>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

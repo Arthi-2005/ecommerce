@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wishlist - StockMart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="toastContainer" class="toast-container"></div>
+  <nav class="navbar glass-nav">
+    <div class="nav-brand">
+      <i class="fas fa-chart-line pulse-icon"></i>
+      <span class="gradient-text brand-name">StockMart</span>
+    </div>
+    <div class="nav-search">
+      <form onsubmit="event.preventDefault();window.location.href='products.html?search='+encodeURIComponent(this.querySelector('input').value)">
+        <i class="fas fa-search nav-search-icon"></i>
+        <input type="text" placeholder="Search products..." class="nav-search-input">
+      </form>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-shopping-bag"></i> Products</a>
+      <a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a>
+      <a href="orders.html" class="nav-link"><i class="fas fa-receipt"></i> Orders</a>
+      <a href="wishlist.html" class="nav-link active"><i class="fas fa-heart"></i> Wishlist</a>
+      <a href="invest.html" class="nav-link"><i class="fas fa-coins"></i> Invest</a>
+      <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="login.html" class="nav-link btn-glow" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-link"><i class="fas fa-home"></i> Home</a>
+    <a href="products.html" class="mobile-link"><i class="fas fa-shopping-bag"></i> Products</a>
+    <a href="cart.html" class="mobile-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="orders.html" class="mobile-link"><i class="fas fa-receipt"></i> Orders</a>
+    <a href="wishlist.html" class="mobile-link active"><i class="fas fa-heart"></i> Wishlist</a>
+    <a href="invest.html" class="mobile-link"><i class="fas fa-coins"></i> Invest</a>
+    <a href="dashboard.html" class="mobile-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="login.html" class="mobile-link"><i class="fas fa-user"></i> Login</a>
+  </div>
+
+  <section class="page-header">
+    <h1 class="gradient-text fade-in"><i class="fas fa-heart"></i> My Wishlist</h1>
+    <p class="fade-in">Products you love</p>
+  </section>
+
+  <!-- Login Required -->
+  <div class="container" id="loginRequired" style="display:none">
+    <div class="empty-state glass-card fade-in">
+      <div class="empty-icon"><i class="fas fa-user-lock"></i></div>
+      <h2>Please Login First</h2>
+      <p>You need to login to view your wishlist</p>
+      <a href="login.html" class="btn btn-primary btn-glow"><i class="fas fa-sign-in-alt"></i> Login Now</a>
+    </div>
+  </div>
+
+  <div class="container" id="wishlistContent" style="display:none">
+    <div class="wishlist-actions-bar" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <span id="wishlistCount" class="fade-in" style="color:var(--text-dim)">0 items</span>
+      <button class="btn btn-secondary btn-sm" onclick="clearWishlist()" id="clearBtn" style="display:none"><i class="fas fa-trash"></i> Clear All</button>
+    </div>
+    <div id="wishlistGrid" class="products-grid">
+      <!-- Filled by JS -->
+    </div>
+    <div class="empty-state glass-card fade-in" id="emptyWishlist" style="display:none">
+      <div class="empty-icon"><i class="fas fa-heart-broken"></i></div>
+      <h2>Wishlist is Empty</h2>
+      <p>Browse products and add your favorites!</p>
+      <a href="products.html" class="btn btn-primary btn-glow"><i class="fas fa-shopping-bag"></i> Browse Products</a>
+    </div>
+  </div>
+
+  <footer class="footer glass-card">
+    <div class="footer-bottom">
+      <p>&copy; 2026 StockMart. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/wishlist.js"></script>
+</body>
+</html>

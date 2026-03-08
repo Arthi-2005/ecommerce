@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockMart - E-Commerce & Stock Analysis</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <h2 class="loader-text gradient-text">StockMart</h2>
+      <p>Loading 800+ Products & Market Data...</p>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar glass-nav">
+    <div class="nav-brand">
+      <i class="fas fa-chart-line pulse-icon"></i>
+      <span class="gradient-text brand-name">StockMart</span>
+    </div>
+    <div class="nav-search">
+      <form onsubmit="event.preventDefault();window.location.href='products.html?search='+encodeURIComponent(this.querySelector('input').value)">
+        <i class="fas fa-search nav-search-icon"></i>
+        <input type="text" placeholder="Search products..." class="nav-search-input">
+      </form>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-shopping-bag"></i> Products</a>
+      <a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a>
+      <a href="orders.html" class="nav-link"><i class="fas fa-receipt"></i> Orders</a>
+      <a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a>
+      <a href="invest.html" class="nav-link"><i class="fas fa-coins"></i> Invest</a>
+      <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="login.html" class="nav-link btn-glow" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-link active"><i class="fas fa-home"></i> Home</a>
+    <a href="products.html" class="mobile-link"><i class="fas fa-shopping-bag"></i> Products</a>
+    <a href="cart.html" class="mobile-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="orders.html" class="mobile-link"><i class="fas fa-receipt"></i> Orders</a>
+    <a href="analytics.html" class="mobile-link"><i class="fas fa-chart-bar"></i> Analytics</a>
+    <a href="invest.html" class="mobile-link"><i class="fas fa-coins"></i> Invest</a>
+    <a href="dashboard.html" class="mobile-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="login.html" class="mobile-link"><i class="fas fa-user"></i> Login</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-content fade-in">
+      <h1 class="hero-title">
+        <span class="gradient-text">E-Commerce</span> meets
+        <span class="gradient-text-2">Stock Market</span>
+      </h1>
+      <p class="hero-subtitle typewriter">Analyze 800+ products with real-time stock market indicators</p>
+      <div class="hero-buttons">
+        <a href="products.html" class="btn btn-primary btn-glow bounce-hover">
+          <i class="fas fa-shopping-cart"></i> Shop Now
+        </a>
+        <a href="analytics.html" class="btn btn-secondary btn-glow bounce-hover">
+          <i class="fas fa-chart-line"></i> View Analytics
+        </a>
+      </div>
+    </div>
+    <div class="hero-chart fade-in-right">
+      <canvas id="heroChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Live Ticker -->
+  <div class="ticker-bar">
+    <div class="ticker-content" id="tickerContent">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card glass-card slide-up" style="--delay: 0.1s">
+          <div class="stat-icon bg-gradient-1"><i class="fas fa-box"></i></div>
+          <div class="stat-number counter" data-target="800">0</div>
+          <div class="stat-label">Total Products</div>
+        </div>
+        <div class="stat-card glass-card slide-up" style="--delay: 0.2s">
+          <div class="stat-icon bg-gradient-2"><i class="fas fa-chart-line"></i></div>
+          <div class="stat-number counter" data-target="8">0</div>
+          <div class="stat-label">Market Sectors</div>
+        </div>
+        <div class="stat-card glass-card slide-up" style="--delay: 0.3s">
+          <div class="stat-icon bg-gradient-3"><i class="fas fa-arrow-up"></i></div>
+          <div class="stat-number" id="gainersCount">0</div>
+          <div class="stat-label">Gainers Today</div>
+        </div>
+        <div class="stat-card glass-card slide-up" style="--delay: 0.4s">
+          <div class="stat-icon bg-gradient-4"><i class="fas fa-dollar-sign"></i></div>
+          <div class="stat-number" id="marketCap">$0</div>
+          <div class="stat-label">Total Market Cap</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Gainers & Losers -->
+  <section class="movers-section">
+    <div class="container">
+      <h2 class="section-title gradient-text fade-in">
+        <i class="fas fa-fire"></i> Market Movers
+      </h2>
+      <div class="movers-grid">
+        <div class="movers-card glass-card slide-left">
+          <h3 class="movers-title text-success"><i class="fas fa-arrow-trend-up"></i> Top Gainers</h3>
+          <div id="topGainers" class="movers-list"></div>
+        </div>
+        <div class="movers-card glass-card slide-right">
+          <h3 class="movers-title text-danger"><i class="fas fa-arrow-trend-down"></i> Top Losers</h3>
+          <div id="topLosers" class="movers-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Section -->
+  <section class="categories-section">
+    <div class="container">
+      <h2 class="section-title gradient-text fade-in">
+        <i class="fas fa-th-large"></i> Explore Categories
+      </h2>
+      <div class="categories-grid" id="categoriesGrid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured-section">
+    <div class="container">
+      <h2 class="section-title gradient-text fade-in">
+        <i class="fas fa-star"></i> Featured Products
+      </h2>
+      <div class="products-grid" id="featuredProducts">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer glass-card">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3 class="gradient-text">StockMart</h3>
+          <p>E-Commerce meets Stock Analysis. Shop smart with market insights.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="products.html">Products</a>
+          <a href="analytics.html">Analytics</a>
+          <a href="dashboard.html">Dashboard</a>
+        </div>
+        <div class="footer-col">
+          <h4>Categories</h4>
+          <a href="products.html?category=Electronics">Electronics</a>
+          <a href="products.html?category=Fashion">Fashion</a>
+          <a href="products.html?category=Books">Books</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> admin@stockmart.com</p>
+          <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 StockMart. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

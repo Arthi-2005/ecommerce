@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders - StockMart</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div id="toastContainer" class="toast-container"></div>
+  <nav class="navbar glass-nav">
+    <div class="nav-brand">
+      <i class="fas fa-chart-line pulse-icon"></i>
+      <span class="gradient-text brand-name">StockMart</span>
+    </div>
+    <div class="nav-search">
+      <form onsubmit="event.preventDefault();window.location.href='products.html?search='+encodeURIComponent(this.querySelector('input').value)">
+        <i class="fas fa-search nav-search-icon"></i>
+        <input type="text" placeholder="Search products..." class="nav-search-input">
+      </form>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="nav-link"><i class="fas fa-shopping-bag"></i> Products</a>
+      <a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartBadge">0</span></a>
+      <a href="orders.html" class="nav-link active"><i class="fas fa-receipt"></i> Orders</a>
+      <a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a>
+      <a href="invest.html" class="nav-link"><i class="fas fa-coins"></i> Invest</a>
+      <a href="dashboard.html" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+      <a href="login.html" class="nav-link btn-glow" id="loginBtn"><i class="fas fa-user"></i> Login</a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="mobile-link"><i class="fas fa-home"></i> Home</a>
+    <a href="products.html" class="mobile-link"><i class="fas fa-shopping-bag"></i> Products</a>
+    <a href="cart.html" class="mobile-link"><i class="fas fa-shopping-cart"></i> Cart</a>
+    <a href="orders.html" class="mobile-link active"><i class="fas fa-receipt"></i> Orders</a>
+    <a href="analytics.html" class="mobile-link"><i class="fas fa-chart-bar"></i> Analytics</a>
+    <a href="invest.html" class="mobile-link"><i class="fas fa-coins"></i> Invest</a>
+    <a href="dashboard.html" class="mobile-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="login.html" class="mobile-link"><i class="fas fa-user"></i> Login</a>
+  </div>
+
+  <section class="page-header">
+    <h1 class="gradient-text fade-in"><i class="fas fa-receipt"></i> My Orders</h1>
+    <p class="fade-in">Track your order history and status</p>
+  </section>
+
+  <!-- Login Required -->
+  <div class="container" id="loginRequired" style="display:none">
+    <div class="empty-state glass-card fade-in">
+      <div class="empty-icon"><i class="fas fa-user-lock"></i></div>
+      <h2>Please Login First</h2>
+      <p>You need to login to view your orders</p>
+      <a href="login.html" class="btn btn-primary btn-glow"><i class="fas fa-sign-in-alt"></i> Login Now</a>
+    </div>
+  </div>
+
+  <!-- Orders List -->
+  <div class="container" id="ordersContent" style="display:none">
+    <div id="ordersList" class="orders-list">
+      <!-- Filled by JS -->
+    </div>
+    <div class="empty-state glass-card fade-in" id="emptyOrders" style="display:none">
+      <div class="empty-icon"><i class="fas fa-box-open"></i></div>
+      <h2>No Orders Yet</h2>
+      <p>You haven't placed any orders yet</p>
+      <a href="products.html" class="btn btn-primary btn-glow"><i class="fas fa-shopping-bag"></i> Start Shopping</a>
+    </div>
+  </div>
+
+  <!-- Order Detail Modal -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal glass-card" style="max-width:700px">
+      <button class="modal-close" onclick="closeOrderModal()"><i class="fas fa-times"></i></button>
+      <div id="orderDetail">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt Preview Modal -->
+  <div class="modal-overlay" id="receiptModal">
+    <div class="modal glass-card receipt-modal">
+      <button class="modal-close" onclick="closeReceiptModal()"><i class="fas fa-times"></i></button>
+      <div class="receipt-modal-header">
+        <i class="fas fa-file-invoice receipt-modal-icon"></i>
+        <h2 class="gradient-text">Order Receipt</h2>
+        <p class="receipt-modal-sub">Preview & download your invoice</p>
+      </div>
+      <div class="receipt-preview-container" id="receiptPreview">
+        <!-- Filled by JS -->
+      </div>
+      <div class="receipt-modal-actions">
+        <button onclick="actualDownloadReceipt()" class="btn btn-primary btn-glow"><i class="fas fa-download"></i> Download Receipt</button>
+        <button onclick="saveReceiptAsPdf()" class="btn btn-secondary btn-glow" style="background:rgba(0,184,148,0.15);color:#00b894;border:1px solid rgba(0,184,148,0.4)"><i class="fas fa-file-pdf"></i> Save as PDF</button>
+        <button onclick="printReceipt()" class="btn btn-secondary"><i class="fas fa-print"></i> Print</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer glass-card">
+    <div class="footer-bottom">
+      <p>&copy; 2026 StockMart. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/orders.js"></script>
+</body>
+</html>
