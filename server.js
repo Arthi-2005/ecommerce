@@ -55,12 +55,16 @@ app.listen(PORT, () => {
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 // Keep-alive: ping self every 5 minutes to prevent sleep
-const SITE_URL = process.env.RENDER_EXTERNAL_URL || process.env.RAILWAY_PUBLIC_DOMAIN
-  ? `https://${process.env.RENDER_EXTERNAL_URL || process.env.RAILWAY_PUBLIC_DOMAIN}`
-  : null;
+const SITE_URL = process.env.RENDER_EXTERNAL_URL
+  ? process.env.RENDER_EXTERNAL_URL
+  : process.env.RAILWAY_PUBLIC_DOMAIN
+    ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+    : null;
 if (SITE_URL) {
   const https = require('https');
+  const http = require('http');
+  const requester = SITE_URL.startsWith('https') ? https : http;
   setInterval(() => {
-    https.get(`${SITE_URL}/api/health`, () => {}).on('error', () => {});
+    requester.get(`${SITE_URL}/api/health`, () => {}).on('error', () => {});
   }, 5 * 60 * 1000);
 }
