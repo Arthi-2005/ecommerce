@@ -50,15 +50,17 @@ app.listen(PORT, () => {
   console.log(`🛒 E-Commerce Platform loaded with 800 products!`);
 });
 
-// Keep-alive: ping self every 14 minutes to prevent Railway sleep
-const SITE_URL = process.env.RAILWAY_PUBLIC_DOMAIN
-  ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
-  : null;
-if (SITE_URL) {
-  setInterval(() => {
-    const https = require('https');
-    https.get(`${SITE_URL}/api/health`, () => {}).on('error', () => {});
-  }, 14 * 60 * 1000);
-}
+
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
+// Keep-alive: ping self every 5 minutes to prevent sleep
+const SITE_URL = process.env.RENDER_EXTERNAL_URL || process.env.RAILWAY_PUBLIC_DOMAIN
+  ? `https://${process.env.RENDER_EXTERNAL_URL || process.env.RAILWAY_PUBLIC_DOMAIN}`
+  : null;
+if (SITE_URL) {
+  const https = require('https');
+  setInterval(() => {
+    https.get(`${SITE_URL}/api/health`, () => {}).on('error', () => {});
+  }, 5 * 60 * 1000);
+}
