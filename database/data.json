@@ -23,6 +23,14 @@
       "role": "user",
       "id": 3,
       "created_at": "2026-03-07T09:47:45.865Z"
+    },
+    {
+      "username": "arul",
+      "email": "arul@user.com",
+      "password": "$2a$10$VZTU6QVjklDfLWfEh7gMyesjmCHit6vOTDBiy2sb9/jfrENW5zrAK",
+      "role": "user",
+      "id": 4,
+      "created_at": "2026-03-30T16:21:24.577Z"
     }
   ],
   "products": [
@@ -62,8 +70,8 @@
       "pe_ratio": 32.57,
       "description": "Max quality shoes by Adidas. Top-rated in Fashion.",
       "image_url": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop",
-      "rating": 3,
-      "reviews": 13322,
+      "rating": 5,
+      "reviews": 1,
       "in_stock": 1,
       "id": 2,
       "created_at": "2026-03-07T07:23:19.582Z"
@@ -215392,25 +215400,39 @@
       "created_at": "2026-03-07T12:58:23.194Z"
     },
     {
-      "user_id": 1,
-      "product_id": 5,
+      "user_id": 4,
+      "product_id": 3,
       "quantity": 1,
-      "id": 29,
-      "created_at": "2026-03-07T13:53:32.765Z"
+      "id": 32,
+      "created_at": "2026-03-30T16:23:12.161Z"
+    },
+    {
+      "user_id": 4,
+      "product_id": 4,
+      "quantity": 1,
+      "id": 33,
+      "created_at": "2026-03-30T16:23:13.912Z"
     },
     {
       "user_id": 1,
-      "product_id": 13,
+      "product_id": 50,
       "quantity": 1,
-      "id": 30,
-      "created_at": "2026-03-07T13:53:35.809Z"
+      "id": 37,
+      "created_at": "2026-03-31T06:33:33.455Z"
     },
     {
       "user_id": 1,
-      "product_id": 21,
+      "product_id": 22,
+      "quantity": 2,
+      "id": 38,
+      "created_at": "2026-03-31T07:11:20.843Z"
+    },
+    {
+      "user_id": 1,
+      "product_id": 30,
       "quantity": 1,
-      "id": 31,
-      "created_at": "2026-03-07T13:53:37.563Z"
+      "id": 39,
+      "created_at": "2026-03-31T07:11:42.616Z"
     }
   ],
   "orders": [
@@ -216450,6 +216472,210 @@
       "details": "Added \"Bosch Advanced Garden Range 75\" to wishlist",
       "id": 98,
       "created_at": "2026-03-07T13:56:33.763Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "login",
+      "details": "User \"admin\" logged in",
+      "id": 99,
+      "created_at": "2026-03-30T16:20:48.941Z"
+    },
+    {
+      "user_id": 2,
+      "username": "user1",
+      "action": "login",
+      "details": "User \"user1\" logged in",
+      "id": 100,
+      "created_at": "2026-03-30T16:20:55.643Z"
+    },
+    {
+      "user_id": 4,
+      "username": "arul",
+      "action": "register",
+      "details": "New user \"arul\" auto-registered",
+      "id": 101,
+      "created_at": "2026-03-30T16:21:24.785Z"
+    },
+    {
+      "user_id": 4,
+      "username": "arul",
+      "action": "login",
+      "details": "User \"arul\" logged in",
+      "id": 102,
+      "created_at": "2026-03-30T16:21:24.950Z"
+    },
+    {
+      "user_id": 4,
+      "username": "arul",
+      "action": "wishlist",
+      "details": "Added \"Bosch Advanced Garden Range 75\" to wishlist",
+      "id": 103,
+      "created_at": "2026-03-30T16:23:07.564Z"
+    },
+    {
+      "user_id": 4,
+      "username": "arul",
+      "action": "wishlist",
+      "details": "Added \"Oxford Plus Education Range 91\" to wishlist",
+      "id": 104,
+      "created_at": "2026-03-30T16:23:09.792Z"
+    },
+    {
+      "user_id": 4,
+      "username": "arul",
+      "action": "add_to_cart",
+      "details": "Added \"Bosch Advanced Garden Range 75\" (x1) to cart",
+      "product_id": 3,
+      "id": 105,
+      "created_at": "2026-03-30T16:23:12.323Z"
+    },
+    {
+      "user_id": 4,
+      "username": "arul",
+      "action": "add_to_cart",
+      "details": "Added \"Oxford Plus Education Range 91\" (x1) to cart",
+      "product_id": 4,
+      "id": 106,
+      "created_at": "2026-03-30T16:23:14.069Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "login",
+      "details": "User \"admin\" logged in",
+      "id": 107,
+      "created_at": "2026-03-30T16:24:58.354Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Google Super Cameras Edition 5\" (x1) to cart",
+      "product_id": 1,
+      "id": 108,
+      "created_at": "2026-03-31T03:56:06.192Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Adidas Max Shoes Series 52\" (x1) to cart",
+      "product_id": 2,
+      "id": 109,
+      "created_at": "2026-03-31T03:56:07.792Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Bosch Advanced Garden Range 75\" (x1) to cart",
+      "product_id": 3,
+      "id": 110,
+      "created_at": "2026-03-31T03:56:09.378Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Adidas Max Shoes Series 52\" (x1) to cart",
+      "product_id": 2,
+      "id": 111,
+      "created_at": "2026-03-31T06:16:55.778Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Bosch Advanced Garden Range 75\" (x1) to cart",
+      "product_id": 3,
+      "id": 112,
+      "created_at": "2026-03-31T06:16:57.835Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "buy_stock",
+      "details": "Bought 2 shares of \"Calvin Klein Classic Shoes Edition 79\" at $1096.55 (Total: $2193.1)",
+      "id": 113,
+      "created_at": "2026-03-31T06:28:20.860Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "ipo_apply",
+      "details": "Applied for NexGen AI Technologies IPO - 1 lot(s)",
+      "id": 114,
+      "created_at": "2026-03-31T06:31:22.770Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Gucci Smart Traditional Line 43\" (x1) to cart",
+      "product_id": 50,
+      "id": 115,
+      "created_at": "2026-03-31T06:33:33.679Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "review",
+      "details": "Reviewed \"Adidas Max Shoes Series 52\" - 5 stars",
+      "id": 116,
+      "created_at": "2026-03-31T06:36:05.394Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Adidas Max Shoes Series 52\" (x1) to cart",
+      "product_id": 2,
+      "id": 117,
+      "created_at": "2026-03-31T06:36:57.662Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Neutrogena Mega Supplements Range 71\" (x1) to cart",
+      "product_id": 22,
+      "id": 118,
+      "created_at": "2026-03-31T07:11:21.055Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Neutrogena Mega Supplements Range 71\" (x1) to cart",
+      "product_id": 22,
+      "id": 119,
+      "created_at": "2026-03-31T07:11:41.636Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "add_to_cart",
+      "details": "Added \"Maybelline Premium Oral Care Range 47\" (x1) to cart",
+      "product_id": 30,
+      "id": 120,
+      "created_at": "2026-03-31T07:11:42.810Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "buy_stock",
+      "details": "Bought 2 shares of \"Calvin Klein Classic Shoes Edition 79\" at $1096.55 (Total: $2193.1)",
+      "id": 121,
+      "created_at": "2026-03-31T07:13:07.036Z"
+    },
+    {
+      "user_id": 1,
+      "username": "admin",
+      "action": "ipo_apply",
+      "details": "Applied for GreenVolt Energy Corp IPO - 4 lot(s)",
+      "id": 122,
+      "created_at": "2026-03-31T07:13:48.423Z"
     }
   ],
   "watchlist": [],
@@ -216495,6 +216721,18 @@
       "product_id": 3,
       "id": 7,
       "created_at": "2026-03-07T13:56:33.541Z"
+    },
+    {
+      "user_id": 4,
+      "product_id": 3,
+      "id": 8,
+      "created_at": "2026-03-30T16:23:07.412Z"
+    },
+    {
+      "user_id": 4,
+      "product_id": 4,
+      "id": 9,
+      "created_at": "2026-03-30T16:23:09.706Z"
     }
   ],
   "investments": [
@@ -216525,26 +216763,26 @@
     {
       "user_id": 1,
       "product_id": 618,
-      "shares": 2,
+      "shares": 6,
       "buy_price": 1096.55,
       "id": 6,
       "created_at": "2026-03-07T13:53:53.971Z"
     }
   ],
   "_counters": {
-    "users": 3,
+    "users": 4,
     "products": 800,
     "stock_history": 24800,
-    "cart": 31,
+    "cart": 39,
     "orders": 2,
     "order_items": 12,
-    "activities": 98,
+    "activities": 122,
     "watchlist": 0,
-    "wishlist": 7,
+    "wishlist": 9,
     "investments": 6,
     "ipos": 8,
-    "ipo_applications": 1,
-    "reviews": 0,
+    "ipo_applications": 3,
+    "reviews": 1,
     "notifications": 2,
     "user_addresses": 0
   },
@@ -216762,9 +217000,46 @@
       "applied_at": "2026-03-07T09:59:26.440Z",
       "id": 1,
       "created_at": "2026-03-07T09:59:26.440Z"
+    },
+    {
+      "ipo_id": 1,
+      "user_id": 1,
+      "lots": 1,
+      "shares": 57,
+      "bid_price": 260,
+      "total_amount": 14820,
+      "status": "applied",
+      "applied_at": "2026-03-31T06:31:22.363Z",
+      "id": 2,
+      "created_at": "2026-03-31T06:31:22.480Z"
+    },
+    {
+      "ipo_id": 2,
+      "user_id": 1,
+      "lots": 4,
+      "shares": 304,
+      "bid_price": 195,
+      "total_amount": 59280,
+      "status": "applied",
+      "applied_at": "2026-03-31T07:13:48.143Z",
+      "id": 3,
+      "created_at": "2026-03-31T07:13:48.211Z"
     }
   ],
-  "reviews": [],
+  "reviews": [
+    {
+      "product_id": 2,
+      "user_id": 1,
+      "username": "admin",
+      "rating": 5,
+      "title": "shoe",
+      "comment": "the product is good and fair",
+      "verified_purchase": false,
+      "helpful_count": 0,
+      "id": 1,
+      "created_at": "2026-03-31T06:36:04.318Z"
+    }
+  ],
   "notifications": [
     {
       "user_id": 1,

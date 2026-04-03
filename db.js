@@ -19,10 +19,10 @@ function saveData(data) {
 
 function getJsonDb() {
   return {
-    getAll(table) { const d = loadData(); return d[table] || []; },
-    findOne(table, field, value) { return (loadData()[table] || []).find(r => r[field] === value) || null; },
-    findById(table, id) { return (loadData()[table] || []).find(r => r.id === Number(id)) || null; },
-    insert(table, record) {
+    async getAll(table) { const d = loadData(); return d[table] || []; },
+    async findOne(table, field, value) { return (loadData()[table] || []).find(r => r[field] === value) || null; },
+    async findById(table, id) { return (loadData()[table] || []).find(r => r.id === Number(id)) || null; },
+    async insert(table, record) {
       const d = loadData();
       if (!d[table]) d[table] = [];
       if (!d._counters) d._counters = {};
@@ -34,8 +34,8 @@ function getJsonDb() {
       saveData(d);
       return record;
     },
-    insertBulk(table, record) { return this.insert(table, record); },
-    bulkInsertMany(table, records) {
+    async insertBulk(table, record) { return this.insert(table, record); },
+    async bulkInsertMany(table, records) {
       const d = loadData();
       if (!d[table]) d[table] = [];
       if (!d._counters) d._counters = {};
@@ -49,7 +49,7 @@ function getJsonDb() {
       saveData(d);
       return inserted;
     },
-    update(table, id, updates) {
+    async update(table, id, updates) {
       const d = loadData();
       const idx = (d[table] || []).findIndex(r => r.id === Number(id));
       if (idx === -1) return null;
@@ -57,15 +57,15 @@ function getJsonDb() {
       saveData(d);
       return d[table][idx];
     },
-    delete(table, id) {
+    async delete(table, id) {
       const d = loadData();
       if (!d[table]) return false;
       d[table] = d[table].filter(r => r.id !== Number(id));
       saveData(d);
       return true;
     },
-    query(table, filterFn) { const rows = loadData()[table] || []; return filterFn ? rows.filter(filterFn) : rows; },
-    deleteWhere(table, filterFn) {
+    async query(table, filterFn) { const rows = loadData()[table] || []; return filterFn ? rows.filter(filterFn) : rows; },
+    async deleteWhere(table, filterFn) {
       const d = loadData();
       if (!d[table]) return 0;
       const before = d[table].length;
@@ -73,8 +73,8 @@ function getJsonDb() {
       saveData(d);
       return before - d[table].length;
     },
-    count(table, filterFn) { const rows = loadData()[table] || []; return filterFn ? rows.filter(filterFn).length : rows.length; },
-    save() {}
+    async count(table, filterFn) { const rows = loadData()[table] || []; return filterFn ? rows.filter(filterFn).length : rows.length; },
+    async save() {}
   };
 }
 
